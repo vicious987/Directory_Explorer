@@ -32,9 +32,11 @@ void directory_crawl(const std::filesystem::path &start_path){
     printf("total entries: %d, directory count: %d, file count: %d, total line count: %d \n",total_entries, dircount, filecount, linecount); // probably replace it with cout
 }
 
-int main() {
-    const std::filesystem::path p = "/home/vicious/playground";
-    const std::filesystem::path p1 = "/home/vicious/playground/cpp/main.cpp";
+int main(int argc, char** argv) {
+    std::string default_path = "/home/vicious/playground";
+    std::filesystem::path p;
+
+    p = argc > 1 ? argv[1] : default_path;
     directory_crawl(p);
     return 0;
 }
