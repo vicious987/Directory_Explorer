@@ -4,6 +4,7 @@
 #include <iostream>
 #include <deque>
 #include <thread>
+#include <cassert>
 
 //TODO: change counters from int to usigned longs
 
@@ -75,19 +76,21 @@ std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path
     }
 
     const auto grouped_filepaths = split_deque(filepaths, thread_count);
+    assert(grouped_filepaths.size() == thread_count);
 
     std::vector<std::thread> threads;
     threads.reserve(thread_count);
-    for (int i = 0; i< thread_count; i++){
-        threads.push_back( std::thread([&](){
-            res.linecount += count_lines_in_files(filepaths); //FIXME
-        }));
+    for (int i = 0; i< thread_count; i++) {
+        const auto &group = grouped_filepaths[i];
+        threads.push_back(std::thread([&res](const std::deque<std::filesystem::path> &g) {
+            int count = count_lines_in_files(g);
+            res.linecount += count;
+        }, group));
     }
 
     for (auto & t : threads){
         t.join();
     }
-
 
     if (verbose) {
         printf("total entries: %d, directory count: %d, file count: %d, total line count: %d \n",
