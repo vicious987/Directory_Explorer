@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <iostream>
 #include <deque>
-
+#include <thread>
 
 //TODO: change counters from int to usigned longs
 
@@ -29,7 +29,25 @@ int count_lines_in_files(const std::deque<std::filesystem::path> &paths){
     return total;
 }
 
+std::vector<std::deque<std::filesystem::path>> split_deque(const std::deque<std::filesystem::path> &in_deq, int n){
+    std::vector<std::deque<std::filesystem::path>> ret;
+    ret.reserve(n);
+    for (int i = 0; i < n; i++){
+        ret.push_back(std::deque<std::filesystem::path>());
+    }
+
+    int i = 0;
+    for (const auto & p : in_deq) {
+        ret[i%n].push_back(p);
+        i++;
+    }
+    return ret;
+}
+
+
+
 std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, bool verbose) {
+    const int thread_count = 2;
     if (!std::filesystem::is_directory(start_path)){
         return std::nullopt;
     }
@@ -46,7 +64,22 @@ std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path
         }
         //std::cout << d << "\n";
     }
-    res.linecount = count_lines_in_files(filepaths);
+
+    const auto grouped_filepaths = split_deque(filepaths, thread_count);
+
+    std::vector<std::thread> threads;
+    threads.reserve(thread_count);
+    for (int i = 0; i< thread_count; i++){
+        threads.push_back( std::thread([&](){
+            res.linecount += count_lines_in_files(filepaths); //FIXME
+        }));
+    }
+
+    for (auto & t : threads){
+        t.join();
+    }
+
+
     if (verbose) {
         printf("total entries: %d, directory count: %d, file count: %d, total line count: %d \n",
             res.total_entries, res.dircount, res.filecount, res.linecount); // probably replace it with cout

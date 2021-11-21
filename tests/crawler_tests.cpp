@@ -111,4 +111,20 @@ TEST(directory_crawl, wide_dir_100) {
     dir_stats expected = {120, 110, 10, 100, 0};
     EXPECT_EQ(expected, res.value());
 }
+
+TEST(split_deq, empty){
+    auto input = std::deque<std::filesystem::path>();
+    auto ret = split_deque(input, 2);
+    EXPECT_EQ(ret.size(), 2);
+    EXPECT_EQ(ret[0].size(), 0);
+    EXPECT_EQ(ret[1].size(), 0);
+}
+
+TEST(split_deq, simple_case){
+    std::deque<std::filesystem::path> input = {"a", "b", "c", "d"};
+    auto ret = split_deque(input, 2);
+    EXPECT_EQ(ret.size(), 2);
+    EXPECT_EQ(ret[0].size(), 2);
+    EXPECT_EQ(ret[1].size(), 2);
+}
 } // namespace
