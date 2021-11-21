@@ -5,5 +5,17 @@ project('bcf_task', 'cpp',
     'cpp_std=c++17',
   ])
 
-executable('bcf', ['main.cpp', 'crawler.cpp'], include_directories : '.')
+executable('bcf', 
+  ['main.cpp', 'crawler.cpp'],
+  include_directories : '.')
 
+# sudo apt install libgtest-dev
+gtest_dep = dependency('gtest', main : true)
+
+
+crawler_tests = executable('tests', 
+  ['tests/crawler_tests.cpp', 'crawler.cpp'],
+  dependencies : gtest_dep,
+  include_directories : '.')
+
+test('unit test', crawler_tests)
