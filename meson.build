@@ -18,4 +18,4 @@ crawler_tests = executable('tests',
   dependencies : gtest_dep,
   include_directories : '.')
 
-test('unit test', crawler_tests)
+test('unit test', crawler_tests, workdir : meson.current_source_dir())
