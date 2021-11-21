@@ -6,6 +6,8 @@
 //test 
 namespace {
 
+// some tests operate on files, and might fail if run from bad directory, due to relative path
+// this function ensures that tests are run from main project directory
 bool is_good_working_dir() {
     return std::filesystem::exists(".git");
 }
@@ -25,6 +27,7 @@ TEST(count_lines, threeliner) {
 }
 
 TEST(count_lines, non_existing) {
+    ASSERT_TRUE(is_good_working_dir());
     EXPECT_EQ(false, count_lines("tests/files/missing.txt").has_value());
 }
 
