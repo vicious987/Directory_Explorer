@@ -1,9 +1,9 @@
-#include <stdio.h>
+#include "crawler.h"
+
+#include <cstdio>
 #include <iostream>
-#include <filesystem>
-#include <fstream>
-#include <optional>
-#include <vector>
+
+
 //TODO: change counters from int to usigned longs
 
 std::optional<int> count_lines(const std::filesystem::path &path){
@@ -19,38 +19,29 @@ std::optional<int> count_lines(const std::filesystem::path &path){
     return lines;
 }
 
-std::optional<std::vector<int>> directory_crawl(const std::filesystem::path &start_path, bool verbose=true){
+std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, bool verbose) {
     if (!std::filesystem::is_directory(start_path)){
         return std::nullopt;
     }
-    std::vector<int> v = {0, 0, 0, 0, 0};
-    int total_entries = 0;
-    int dircount = 0;
-    int filecount = 0;
-    int linecount = 0;
-    int unreadable = 0;
+    dir_stats res;
     for(auto const &d: std::filesystem::recursive_directory_iterator{start_path}){
-        total_entries++;
+        res.total_entries++;
         if (d.is_directory())
-            dircount++;
+            res.dircount++;
         else {
-            filecount++;
+            res.filecount++;
             auto cl = count_lines(d.path());
             if (cl.has_value()){
-                linecount += cl.value();
+                res.linecount += cl.value();
             } else {
-                unreadable++;
+                res.unreadable++;
             }
         }
         //std::cout << d << "\n";
     }
     if (verbose) {
-        printf("total entries: %d, directory count: %d, file count: %d, total line count: %d \n",total_entries, dircount, filecount, linecount); // probably replace it with cout
+        printf("total entries: %d, directory count: %d, file count: %d, total line count: %d \n",
+            res.total_entries, res.dircount, res.filecount, res.linecount); // probably replace it with cout
     }
-    v[0] = total_entries;
-    v[1] = dircount;
-    v[2] = filecount;
-    v[3] = linecount;
-    v[4] = unreadable;
-    return v;
+    return res;
 }

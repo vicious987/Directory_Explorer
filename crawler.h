@@ -3,6 +3,23 @@
 #include <optional>
 #include <vector>
 
+struct dir_stats {
+    int total_entries = 0;
+    int dircount = 0;
+    int filecount = 0;
+    int linecount = 0;
+    int unreadable = 0;
+
+    constexpr bool operator==(const dir_stats& other) const {
+        return total_entries == other.total_entries &&
+                dircount == other.dircount &&
+                filecount == other.filecount &&
+                linecount == other.linecount &&
+                unreadable == other.unreadable;
+    }
+};
+
+
 std::optional<int> count_lines(const std::filesystem::path &path);
 
-std::optional<std::vector<int>> directory_crawl(const std::filesystem::path &start_path, bool verbose=true);
+std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, bool verbose=true);

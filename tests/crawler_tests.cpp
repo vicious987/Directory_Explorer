@@ -91,7 +91,7 @@ TEST(directory_crawl, wide_dir_only_110) {
     ASSERT_TRUE(is_good_working_dir());
     const auto res = directory_crawl("tests/files/wide_dir_only_110", false);
     ASSERT_TRUE(res.has_value());
-    std::vector<int> expected = {110, 110, 0, 0, 0};
+    dir_stats expected = {110, 110, 0, 0, 0};
     EXPECT_EQ(expected, res.value());
 }
 
@@ -99,7 +99,7 @@ TEST(directory_crawl, deep_dir_only_1023) {
     ASSERT_TRUE(is_good_working_dir());
     const auto res = directory_crawl("tests/files/deep_dir_only_1023", false);
     ASSERT_TRUE(res.has_value());
-    std::vector<int> expected = {1023, 1023, 0, 0, 0};
+    dir_stats expected = {1023, 1023, 0, 0, 0};
     EXPECT_EQ(expected, res.value());
 }
 
@@ -108,7 +108,7 @@ TEST(directory_crawl, wide_dir_100) {
     ASSERT_TRUE(is_good_working_dir());
     const auto res = directory_crawl("tests/files/wide_dir_100", false);
     ASSERT_TRUE(res.has_value());
-    std::vector<int> expected = {120, 110, 10, 100, 0};
+    dir_stats expected = {120, 110, 10, 100, 0};
     EXPECT_EQ(expected, res.value());
 }
 } // namespace
