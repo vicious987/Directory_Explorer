@@ -87,6 +87,7 @@ TEST(directory_crawl, lorem_ipsum_10){
     EXPECT_EQ(false, directory_crawl("tests/files/lorem_ipsum_10.txt").has_value());
 }
 
+//10*10 + 10 directories, 100 empty files
 TEST(directory_crawl, wide_dir_only_110) {
     ASSERT_TRUE(is_good_working_dir());
     const auto res = directory_crawl("tests/files/wide_dir_only_110", false);
