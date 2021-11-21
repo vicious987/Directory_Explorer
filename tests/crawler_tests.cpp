@@ -1,6 +1,7 @@
 #include "crawler.h"
 #include <gtest/gtest.h>
 #include <optional>
+#include <vector>
 #include <filesystem>
 
 //test 
@@ -8,8 +9,8 @@
 //bad input dir
 namespace {
 
-// some tests operate on files and might fail if run from bad directory due to relative pathnames
-// this function ensures that tests fail if not ran from main project directory
+// some tests operate on files and might yield unintential results if run from bad directory due to relative pathnames
+// this function ensures that tests fail if not run from main project directory
 bool is_good_working_dir() {
     return std::filesystem::exists(".git");
 }
@@ -60,4 +61,19 @@ TEST(directory_crawl, non_existing_dir){
     EXPECT_EQ(false, directory_crawl("test/files/non_existing").has_value());
 }
 
+TEST(directory_crawl, wide_dir_only_110) {
+    ASSERT_TRUE(is_good_working_dir());
+    const auto res = directory_crawl("tests/files/wide_dir_only_110", false);
+    ASSERT_TRUE(res.has_value());
+    std::vector<int> expected = {110, 110, 0, 0, 0};
+    EXPECT_EQ(expected, res.value());
+}
+
+TEST(directory_crawl, depp_dir_only_1023) {
+    ASSERT_TRUE(is_good_working_dir());
+    const auto res = directory_crawl("tests/files/deep_dir_only_1023", false);
+    ASSERT_TRUE(res.has_value());
+    std::vector<int> expected = {1023, 1023, 0, 0, 0};
+    EXPECT_EQ(expected, res.value());
+}
 } // namespace
