@@ -20,7 +20,7 @@ std::optional<int> count_lines(const std::filesystem::path &path){
 }
 
 std::optional<std::vector<int>> directory_crawl(const std::filesystem::path &start_path, bool verbose=true){
-    if (!std::filesystem::exists(start_path)){
+    if (!std::filesystem::is_directory(start_path)){
         return std::nullopt;
     }
     std::vector<int> v = {0, 0, 0, 0, 0};
