@@ -13,9 +13,11 @@ executable('bcf',
   include_directories : '.')
 
 # sudo apt install libgtest-dev
-gtest_dep = dependency('gtest', main : true)
-
-
+# if gtest is not installed, then meson will download it as subproject
+gtest_dep = dependency('gtest', 
+  main : true,
+  fallback : ['gtest', 'gtest_main_dep']
+)
 
 crawler_tests = executable('tests', 
   ['tests/crawler_tests.cpp', 'crawler.cpp'],
