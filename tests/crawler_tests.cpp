@@ -50,5 +50,14 @@ TEST(count_lines, unredable_empty) {
     std::filesystem::permissions(filename, old_perms, std::filesystem::perm_options::replace);
 }
 
+TEST(directory_crawl, empty_input){
+    ASSERT_TRUE(is_good_working_dir());
+    EXPECT_EQ(false, directory_crawl("").has_value());
+}
+
+TEST(directory_crawl, non_existing_dir){
+    ASSERT_TRUE(is_good_working_dir());
+    EXPECT_EQ(false, directory_crawl("test/files/non_existing").has_value());
+}
 
 } // namespace

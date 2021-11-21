@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <fstream>
 #include <optional>
+#include <vector>
 //TODO: change counters from int to usigned longs
 
 std::optional<int> count_lines(const std::filesystem::path &path){
@@ -18,18 +19,17 @@ std::optional<int> count_lines(const std::filesystem::path &path){
     return lines;
 }
 
-//TODO: std::permissions
-//std::permissions zwraca tylko flagi, nie możemy zczytać czy mamy również poprawny UID lub GID, nawet jeśli flaga R jest prawdziwa
-//alternatywa: zczytać plik io streamem, spojrzeć na iostate, który posiada failbit (input/output operation failed (formatting or extraction error)) 
-void directory_crawl(const std::filesystem::path &start_path){
+std::optional<std::vector<int>> directory_crawl(const std::filesystem::path &start_path, bool verbose=true){
+    if (!std::filesystem::exists(start_path)){
+        return std::nullopt;
+    }
+    std::vector<int> v = {0, 0, 0, 0, 0};
     int total_entries = 0;
     int dircount = 0;
     int filecount = 0;
     int linecount = 0;
     int unreadable = 0;
     for(auto const &d: std::filesystem::recursive_directory_iterator{start_path}){
-        //std::filesystem::perms p = std::filesystem::status(d).permissions();
-        //bool owner_read = (p & std::filesystem::perms::owner_read) != std::filesystem::perms::none;
         total_entries++;
         if (d.is_directory())
             dircount++;
@@ -42,9 +42,15 @@ void directory_crawl(const std::filesystem::path &start_path){
                 unreadable++;
             }
         }
-        //std::cout << d << owner_read << group_read << others_read << "\n";
-        //std::cout << d << owner_read << "\n";
         //std::cout << d << "\n";
     }
-    printf("total entries: %d, directory count: %d, file count: %d, total line count: %d \n",total_entries, dircount, filecount, linecount); // probably replace it with cout
+    if (verbose) {
+        printf("total entries: %d, directory count: %d, file count: %d, total line count: %d \n",total_entries, dircount, filecount, linecount); // probably replace it with cout
+    }
+    v[0] = total_entries;
+    v[1] = dircount;
+    v[2] = filecount;
+    v[3] = linecount;
+    v[4] = unreadable;
+    return v;
 }
