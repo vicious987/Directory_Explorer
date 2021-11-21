@@ -31,5 +31,12 @@ TEST(count_lines, non_existing) {
     EXPECT_EQ(false, count_lines("tests/files/missing.txt").has_value());
 }
 
+TEST(count_lines, empty) {
+    ASSERT_TRUE(is_good_working_dir());
+    const auto res = count_lines("tests/files/empty.txt");
+    ASSERT_TRUE(res.has_value());
+    EXPECT_EQ(0, res.value());
+}
+
 
 } // namespace
