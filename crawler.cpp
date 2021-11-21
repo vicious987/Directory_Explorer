@@ -7,6 +7,15 @@
 
 //TODO: change counters from int to usigned longs
 
+std::ostream& operator<<(std::ostream& out, const dir_stats& ds) {
+    return out << "{"
+               << ds.total_entries << ", "
+               << ds.dircount << ", "
+               << ds.filecount << ", "
+               << ds.linecount
+               << "}";
+}
+
 std::optional<int> count_lines(const std::filesystem::path &path){
     std::fstream istream;                
     int lines = 0;                  //huge files?

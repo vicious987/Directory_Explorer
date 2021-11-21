@@ -20,6 +20,7 @@ struct dir_stats {
     }
 };
 
+std::ostream& operator<<(std::ostream& out, const dir_stats& ds);
 
 std::optional<int> count_lines(const std::filesystem::path &path);
 
