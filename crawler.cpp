@@ -63,8 +63,9 @@ std::vector<std::deque<std::filesystem::path>> split_deque(const std::deque<std:
     return ret;
 }
 
-std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, int thread_count) {
-    thread_count = std::min(thread_count, int(std::thread::hardware_concurrency()));
+
+std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, unsigned int thread_count) {
+    thread_count = std::min(thread_count, std::thread::hardware_concurrency());
     std::mutex mtx;
     dir_stats res;
     std::deque<std::filesystem::path> filepaths;
@@ -89,7 +90,7 @@ std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path
 
     //appoint each group of files to a thread
     threads.reserve(thread_count);
-    for (int i = 0; i< thread_count; i++) {
+    for (unsigned int i = 0; i< thread_count; i++) {
         const auto &group = grouped_filepaths[i];
         threads.push_back(std::thread([&res, &mtx](const std::deque<std::filesystem::path> &g) {
             const int count = count_lines_in_files(g);

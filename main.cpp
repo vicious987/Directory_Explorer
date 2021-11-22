@@ -13,6 +13,7 @@ int main(int argc, char** argv) {
     switch(argc){
         case 3:
             thread_number = std::atoi(argv[2]);
+            [[fallthrough]];
         case 2:
             p = argv[1];
             break;
