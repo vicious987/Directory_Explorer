@@ -45,11 +45,15 @@ Then build it with ninja
 
     $ ninja -C build
 
+To build and run just tests:
+
+    $ ninja -C build test
+
 Both program and tests are build this way.
 # Running
 Execute program by running:
 
-    $ ./build/bcf pathname_str thread_number
+    $ ./build/bcf pathname thread_number
 
 Execute tests by running:
 

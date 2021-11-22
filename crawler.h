@@ -21,6 +21,8 @@ struct dir_stats {
 };
 std::ostream& operator<<(std::ostream& out, const dir_stats& ds);
 
+void pretty_print(const dir_stats& ds);
+
 std::optional<int> count_lines(const std::filesystem::path &path);
 
 std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, int thread_count, bool verbose);

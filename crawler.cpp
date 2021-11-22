@@ -21,6 +21,11 @@ std::ostream& operator<<(std::ostream& out, const dir_stats& ds) {
                << ds.unreadable << "}";
 }
 
+void pretty_print(const dir_stats& ds){
+        printf("total entries: %d, directory count: %d, file count: %d, total line count: %d\n",
+            ds.total_entries, ds.dircount, ds.filecount, ds.linecount);
+}
+
 std::optional<int> count_lines(const std::filesystem::path &path){
     std::fstream istream;
     int lines = 0;

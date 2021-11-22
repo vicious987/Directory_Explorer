@@ -18,6 +18,9 @@ int main(int argc, char** argv) {
             break;
     }
 
-    directory_crawl(p, thread_number, false);
+    auto r = directory_crawl(p, thread_number, false);
+    if (r.has_value()){
+        pretty_print(r.value());
+    }
     return 0;
 }
