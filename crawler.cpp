@@ -56,17 +56,18 @@ std::vector<std::deque<std::filesystem::path>> split_deque(const std::deque<std:
     return ret;
 }
 
-
-
 std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, int thread_count, bool verbose) {
     thread_count = std::min(thread_count, int(std::thread::hardware_concurrency()));
     std::mutex mtx;
+    dir_stats res;
+    std::deque<std::filesystem::path> filepaths;
+    std::vector<std::thread> threads;
+
     if (!std::filesystem::is_directory(start_path)){
         return std::nullopt;
     }
-    dir_stats res;
-    std::deque<std::filesystem::path> filepaths;
 
+    //gather files to process and divide into equal groups
     for(auto const &d: std::filesystem::recursive_directory_iterator{start_path}){
         res.total_entries++;
         if (d.is_directory())
@@ -75,13 +76,11 @@ std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path
             filepaths.push_back(d);
             res.filecount++;
         }
-        //std::cout << d << "\n";
     }
-
     const auto grouped_filepaths = split_deque(filepaths, thread_count);
     assert(grouped_filepaths.size() == thread_count);
 
-    std::vector<std::thread> threads;
+    //appoint each group of files to a thread
     threads.reserve(thread_count);
     for (int i = 0; i< thread_count; i++) {
         const auto &group = grouped_filepaths[i];
@@ -100,7 +99,7 @@ std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path
 
     if (verbose) {
         printf("total entries: %d, directory count: %d, file count: %d, total line count: %d \n",
-            res.total_entries, res.dircount, res.filecount, res.linecount); // probably replace it with cout
+            res.total_entries, res.dircount, res.filecount, res.linecount);
     }
     return res;
 }
