@@ -14,8 +14,8 @@ std::ostream& operator<<(std::ostream& out, const dir_stats& ds) {
                << ds.total_entries << ", "
                << ds.dircount << ", "
                << ds.filecount << ", "
-               << ds.linecount
-               << "}";
+               << ds.linecount << ", "
+               << ds.unreadable << "}";
 }
 
 std::optional<int> count_lines(const std::filesystem::path &path){

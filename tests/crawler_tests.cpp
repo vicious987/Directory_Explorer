@@ -92,24 +92,25 @@ TEST(directory_crawl, wide_dir_only_110) {
     ASSERT_TRUE(is_good_working_dir());
     const auto res = directory_crawl("tests/files/wide_dir_only_110", false);
     ASSERT_TRUE(res.has_value());
-    dir_stats expected = {110, 110, 0, 0, 0};
+    dir_stats expected = {210, 110, 100, 0, 0};
     EXPECT_EQ(expected, res.value());
 }
 
+//2^10-1 directories in binary tree-like form of depth 10, 2^9 empty files
 TEST(directory_crawl, deep_dir_only_1023) {
     ASSERT_TRUE(is_good_working_dir());
     const auto res = directory_crawl("tests/files/deep_dir_only_1023", false);
     ASSERT_TRUE(res.has_value());
-    dir_stats expected = {1023, 1023, 0, 0, 0};
+    dir_stats expected = {1535, 1023, 512, 0, 0};
     EXPECT_EQ(expected, res.value());
 }
 
-//10*10 +10 directories, 10 text files, 10 lines each
+//20 directories, 10 text files, 10 lines each
 TEST(directory_crawl, wide_dir_100) {
     ASSERT_TRUE(is_good_working_dir());
     const auto res = directory_crawl("tests/files/wide_dir_100", false);
     ASSERT_TRUE(res.has_value());
-    dir_stats expected = {120, 110, 10, 100, 0};
+    dir_stats expected = {30, 20, 10, 100, 0};
     EXPECT_EQ(expected, res.value());
 }
 
