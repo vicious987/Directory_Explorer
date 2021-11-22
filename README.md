@@ -10,7 +10,7 @@ Create the application that will analyze and show statistics of specified direct
 
 - As a bonus, you could also count words and letters and provide performance benchmarks (e.g., measure the impact of using the different number of threads).
 ## My comments
-This projects uses Meson as build system.
+This projects uses Meson as build system and Gtest as testing framework.
 
 To complete this task, my program gathers files in specified path, distributes them between collections. Then, each thread takes own collection of files and processes it.
 
@@ -18,7 +18,6 @@ Thread number (specified by parameter) doesn't exceed number of threads supporte
 
 # Dependencies
 To build and run this project following dependencies are required:
-- GTK development tools 
 - Meson build system
     - python3
     - ninja
@@ -27,19 +26,16 @@ Optional:
 - Gtest (system library used by default, if not present meson will provide)
 
 # Installing dependencies
-## GTK development tools
 ### Debian based distros (Ubuntu):
     sudo apt update
     sudo apt install build-essential
-### Redhat based distros (Fedora, Centos, RHEL):
-    sudo dnf install gcc-c++
-## Meson
-### Debian based distros (Ubuntu):
-    sudo apt update
     sudo apt install meson ninja-build
+    sudo apt install libgtest-dev
 
 ### Redhat based distros (Fedora, Centos, RHEL):
+    sudo dnf install gcc-c++
     sudo dnf install meson ninja-build
+    sudo dnf install gtest
 
 ### Windows
 Please follow instructions stated [here](https://mesonbuild.com/SimpleStart.html).
