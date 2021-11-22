@@ -8,7 +8,9 @@
 #include <cassert>
 #include <algorithm>
 
-//TODO: change counters from int to usigned longs
+//TODO
+// change counters from int to usigned longs
+// move verbose from directory_crawl into seperate function 
 
 std::ostream& operator<<(std::ostream& out, const dir_stats& ds) {
     return out << "{"
