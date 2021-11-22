@@ -10,7 +10,7 @@ Create the application that will analyze and show statistics of specified direct
 
 - As a bonus, you could also count words and letters and provide performance benchmarks (e.g., measure the impact of using the different number of threads).
 ## My comments
-This projects uses Meson as build system and Gtest as testing framework.
+This projects uses [Meson](https://mesonbuild.com/) as build system and [Gtest](https://google.github.io/googletest/) as testing framework.
 
 To complete this task, my program gathers files in specified path, distributes them between collections. Then, each thread takes own collection of files and processes it.
 
