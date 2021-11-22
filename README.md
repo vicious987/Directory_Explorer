@@ -42,7 +42,7 @@ Optional:
     sudo dnf install meson ninja-build
 
 ### Windows
-Please follow instructions stated ![here](https://mesonbuild.com/SimpleStart.html).
+Please follow instructions stated [here](https://mesonbuild.com/SimpleStart.html).
 
 # Building
 Setup the build enviroment:
