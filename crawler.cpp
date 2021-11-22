@@ -6,6 +6,7 @@
 #include <thread>
 #include <mutex>
 #include <cassert>
+#include <algorithm>
 
 //TODO: change counters from int to usigned longs
 
@@ -57,9 +58,9 @@ std::vector<std::deque<std::filesystem::path>> split_deque(const std::deque<std:
 
 
 
-std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, bool verbose) {
+std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, int thread_count, bool verbose) {
+    thread_count = std::min(thread_count, int(std::thread::hardware_concurrency()));
     std::mutex mtx;
-    const int thread_count = 2;
     if (!std::filesystem::is_directory(start_path)){
         return std::nullopt;
     }

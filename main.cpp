@@ -7,6 +7,6 @@ int main(int argc, char** argv) {
     std::filesystem::path p;
 
     p = argc > 1 ? argv[1] : default_path;
-    directory_crawl(p);
+    directory_crawl(p, 2, false);
     return 0;
 }

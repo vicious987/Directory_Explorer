@@ -19,11 +19,10 @@ struct dir_stats {
                 unreadable == other.unreadable;
     }
 };
-
 std::ostream& operator<<(std::ostream& out, const dir_stats& ds);
 
 std::optional<int> count_lines(const std::filesystem::path &path);
 
-std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, bool verbose=true);
+std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, int thread_count, bool verbose);
 
 std::vector<std::deque<std::filesystem::path>> split_deque(const std::deque<std::filesystem::path> &in_deq, int n);
