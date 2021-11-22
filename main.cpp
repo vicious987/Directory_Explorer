@@ -5,9 +5,7 @@
 #include <stdlib.h>
 
 int main(int argc, char** argv) {
-    std::string default_path = "/home/vicious/playground";
-
-    std::filesystem::path p = default_path;
+    std::filesystem::path p;
     unsigned int thread_number = 1;
 
     switch(argc){
@@ -18,7 +16,8 @@ int main(int argc, char** argv) {
             p = argv[1];
             break;
         default:
-            printf("Bad arguments count! Examplary usage:\n./build/bcf pathname thread_number\n");
+            printf("Bad argument count! Usage:\n"
+                   "bcf pathname thread_number\n");
             return 0;
     }
 
