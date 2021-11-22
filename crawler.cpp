@@ -20,14 +20,14 @@ std::ostream& operator<<(std::ostream& out, const dir_stats& ds) {
 }
 
 std::optional<int> count_lines(const std::filesystem::path &path){
-    std::fstream istream;                
-    int lines = 0;                  //huge files?
+    std::fstream istream;
+    int lines = 0;
     std::string s;
-    istream.open(path, std::ios::in);             //FIXME what if can't open
+    istream.open(path, std::ios::in);
     if (!istream.is_open())
-        return std::nullopt; 
-    while(std::getline(istream, s)) // is it safe?
-        lines++;                    // what if huge 1 liner?
+        return std::nullopt;
+    while(std::getline(istream, s))
+        lines++;
     istream.close();
     return lines;
 }
