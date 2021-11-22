@@ -28,26 +28,23 @@ Optional:
 # Installing dependencies
 ### Debian based distros (Ubuntu):
     sudo apt update
-    sudo apt install build-essential
-    sudo apt install meson ninja-build
-    sudo apt install libgtest-dev
+    sudo apt install build-essential libgtest-dev meson ninja-build
 
 ### Redhat based distros (Fedora, Centos, RHEL):
-    sudo dnf install gcc-c++
-    sudo dnf install meson ninja-build
-    sudo dnf install gtest
+    sudo dnf install gcc-c++ meson ninja-build gtest-devel
 
 ### Windows
 Please follow instructions stated [here](https://mesonbuild.com/SimpleStart.html).
 
 # Building
-Setup the build enviroment:
+Move to cloned project directory and setup the build directory with:
 
-    $ cd /project_dir
     $ meson setup build
+
 Then build it with ninja
 
     $ ninja -C build
+
 Both program and tests are build this way.
 # Running
 Execute program by running:
