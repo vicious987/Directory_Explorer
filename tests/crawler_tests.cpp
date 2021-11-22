@@ -69,28 +69,28 @@ TEST(count_lines, unreadable_empty) {
 
 TEST(directory_crawl, empty_input){
     ASSERT_TRUE(is_good_working_dir());
-    EXPECT_EQ(false, directory_crawl("", 2, false).has_value());
+    EXPECT_EQ(false, directory_crawl("", 2).has_value());
 }
 
 TEST(directory_crawl, non_existing_dir){
     ASSERT_TRUE(is_good_working_dir());
-    EXPECT_EQ(false, directory_crawl("test/files/non_existing", 2, false).has_value());
+    EXPECT_EQ(false, directory_crawl("test/files/non_existing", 2).has_value());
 }
 
 TEST(directory_crawl, lorem_ipsum_28){
     ASSERT_TRUE(is_good_working_dir());
-    EXPECT_EQ(false, directory_crawl("tests/files/lorem_ipsum_28.txt", 2, false).has_value());
+    EXPECT_EQ(false, directory_crawl("tests/files/lorem_ipsum_28.txt", 2).has_value());
 }
 
 TEST(directory_crawl, lorem_ipsum_10){
     ASSERT_TRUE(is_good_working_dir());
-    EXPECT_EQ(false, directory_crawl("tests/files/lorem_ipsum_10.txt", 2, false).has_value());
+    EXPECT_EQ(false, directory_crawl("tests/files/lorem_ipsum_10.txt", 2).has_value());
 }
 
 //10*10 + 10 directories, 100 empty files
 TEST(directory_crawl, wide_dir_only_110) {
     ASSERT_TRUE(is_good_working_dir());
-    const auto res = directory_crawl("tests/files/wide_dir_only_110", 2, false);
+    const auto res = directory_crawl("tests/files/wide_dir_only_110", 2);
     ASSERT_TRUE(res.has_value());
     dir_stats expected = {210, 110, 100, 0, 0};
     EXPECT_EQ(expected, res.value());
@@ -99,7 +99,7 @@ TEST(directory_crawl, wide_dir_only_110) {
 //2^10-1 directories in binary tree-like form of depth 10, 2^9 empty files
 TEST(directory_crawl, deep_dir_only_1023) {
     ASSERT_TRUE(is_good_working_dir());
-    const auto res = directory_crawl("tests/files/deep_dir_only_1023", 2, false);
+    const auto res = directory_crawl("tests/files/deep_dir_only_1023", 2);
     ASSERT_TRUE(res.has_value());
     dir_stats expected = {1535, 1023, 512, 0, 0};
     EXPECT_EQ(expected, res.value());
@@ -108,7 +108,7 @@ TEST(directory_crawl, deep_dir_only_1023) {
 //20 directories, 10 text files, 10 lines each
 TEST(directory_crawl, wide_dir_100) {
     ASSERT_TRUE(is_good_working_dir());
-    const auto res = directory_crawl("tests/files/wide_dir_100", 2, false);
+    const auto res = directory_crawl("tests/files/wide_dir_100", 2);
     ASSERT_TRUE(res.has_value());
     dir_stats expected = {30, 20, 10, 100, 0};
     EXPECT_EQ(expected, res.value());

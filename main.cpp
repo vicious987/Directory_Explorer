@@ -17,11 +17,11 @@ int main(int argc, char** argv) {
             p = argv[1];
             break;
         default:
-            printf("\nBad arguments count! Examplary usage:\n./build/bcf pathname thread_number\n");
+            printf("Bad arguments count! Examplary usage:\n./build/bcf pathname thread_number\n");
             return 0;
     }
 
-    auto r = directory_crawl(p, thread_number, false);
+    auto r = directory_crawl(p, thread_number);
     if (r.has_value()){
         pretty_print(r.value());
     }

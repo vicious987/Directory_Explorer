@@ -63,7 +63,7 @@ std::vector<std::deque<std::filesystem::path>> split_deque(const std::deque<std:
     return ret;
 }
 
-std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, int thread_count, bool verbose) {
+std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path, int thread_count) {
     thread_count = std::min(thread_count, int(std::thread::hardware_concurrency()));
     std::mutex mtx;
     dir_stats res;
@@ -104,9 +104,5 @@ std::optional<dir_stats> directory_crawl(const std::filesystem::path &start_path
         t.join();
     }
 
-    if (verbose) {
-        printf("total entries: %d, directory count: %d, file count: %d, total line count: %d \n",
-            res.total_entries, res.dircount, res.filecount, res.linecount);
-    }
     return res;
 }
