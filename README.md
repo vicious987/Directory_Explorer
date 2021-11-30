@@ -1,20 +1,11 @@
-# Preface
-## Task
-Create the application that will analyze and show statistics of specified directory that will handle recursive directories. It should print number of files and total number of lines (might as well count non-empty and empty lines). Provide unit tests for solutions.
+# What is it? 
+**Directory_Explorer** is a simple, multithreaded console application that given a directory path, recursively crawls around in that path, counts number of directories, files and lines in files.
 
-- Application should use multithreading (keep in mind system limitations, you might need to control number of concurrent calls, e.g., use thread pool).
-
-- Use std::filesystem
-
-- Use GTest for Unit Tests
-
-- As a bonus, you could also count words and letters and provide performance benchmarks (e.g., measure the impact of using the different number of threads).
-## My comments
-This projects uses [Meson](https://mesonbuild.com/) as build system and [Gtest](https://google.github.io/googletest/) as testing framework.
-
-To complete this task, my program gathers files in specified path, distributes them between collections. Then, each thread takes own collection of files and processes it.
+To complete this task, this program gathers files in specified path, distributes them between collections. Then, each thread takes own collection of files and processes it.
 
 Thread number (specified by parameter) doesn't exceed number of threads supported by hardware. 
+
+This projects uses [Meson](https://mesonbuild.com/) as build system and [Gtest](https://google.github.io/googletest/) as testing framework.
 
 # Dependencies
 To build and run this project following dependencies are required:
@@ -53,7 +44,7 @@ Both program and tests are build this way.
 # Running
 Execute program by running:
 
-    $ ./build/bcf pathname thread_number
+    $ ./build/directory_explorer pathname thread_number
 
 Execute tests by running:
 

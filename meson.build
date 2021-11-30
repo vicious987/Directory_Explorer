@@ -1,4 +1,4 @@
-project('bcf_task', 'cpp',
+project('directory_explorer', 'cpp',
   version : '0.1.0',
   default_options : [
     'warning_level=3',
@@ -7,7 +7,7 @@ project('bcf_task', 'cpp',
 
 threads_dep = dependency('threads')
 
-executable('bcf', 
+executable('directory_explorer', 
   ['main.cpp', 'crawler.cpp'],
   dependencies : threads_dep,
   include_directories : '.')
