@@ -1,7 +1,7 @@
 # What is it? 
-**Directory_Explorer** is a simple, multithreaded console application that given a directory path, recursively crawls around in that path, counts number of directories, files and lines in files.
+**Directory_Explorer** is a simple, multithreaded console application. Given a directory path, recursively crawls around in that path, counts number of directories, files and lines in files.
 
-To complete this task, this program gathers files in specified path, distributes them between collections. Then, each thread takes own collection of files and processes it.
+To complete this task, program gathers files in specified path, distributes them between collections. Then, each thread takes own collection of files and processes it.
 
 Thread number (specified by parameter) doesn't exceed number of threads supported by hardware. 
 
